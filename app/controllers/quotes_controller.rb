@@ -4,14 +4,16 @@ class QuotesController < ApplicationController
   # GET /quotes
   # GET /quotes.json
   def index
-    @quotes = {"quotation": "The secret of getting ahead is getting started."}
+    @quotes = Quote.all
       json_response(@quotes)
   end
 
   # GET /quotes/1
   # GET /quotes/1.json
   def show
-  end
+      @quote = Quote.find(params[:id])
+      json_response(@quote)
+    end
 
   # GET /quotes/new
   def new
@@ -25,42 +27,24 @@ class QuotesController < ApplicationController
   # POST /quotes
   # POST /quotes.json
   def create
-    @quote = Quote.new(quote_params)
-
-    respond_to do |format|
-      if @quote.save
-        format.html { redirect_to @quote, notice: 'Quote was successfully created.' }
-        format.json { render :show, status: :created, location: @quote }
-      else
-        format.html { render :new }
-        format.json { render json: @quote.errors, status: :unprocessable_entity }
-      end
+      @quote = Quote.create(quote_params)
+      json_response(@quote)
     end
-  end
-
   # PATCH/PUT /quotes/1
   # PATCH/PUT /quotes/1.json
   def update
-    respond_to do |format|
-      if @quote.update(quote_params)
-        format.html { redirect_to @quote, notice: 'Quote was successfully updated.' }
-        format.json { render :show, status: :ok, location: @quote }
-      else
-        format.html { render :edit }
-        format.json { render json: @quote.errors, status: :unprocessable_entity }
-      end
+      @quote = Quote.find(params[:id])
+      @quote.update(quote_params)
     end
-  end
-
   # DELETE /quotes/1
   # DELETE /quotes/1.json
   def destroy
-    @quote.destroy
-    respond_to do |format|
-      format.html { redirect_to quotes_url, notice: 'Quote was successfully destroyed.' }
-      format.json { head :no_content }
+      @quote = Quote.find(params[:id])
+      @quote.destroy
+      render status: 200, json: {
+        message: "Your quote has succesfully been deleted"
+      }
     end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
