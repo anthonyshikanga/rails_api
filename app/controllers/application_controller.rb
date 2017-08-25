@@ -7,6 +7,6 @@ class ApplicationController < ActionController::API
     json_response({ error: exception.message }, :not_found)
 end
 rescue_from ActiveRecord::RecordNotFound do |exception|
-    json_response({ error: exception.message }, :not_found)
+    json_response({ error: exception.message }, :unprocessable_entity)
 end
 end
