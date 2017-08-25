@@ -27,14 +27,15 @@ class QuotesController < ApplicationController
   # POST /quotes
   # POST /quotes.json
   def create
-      @quote = Quote.create(quote_params)
-      json_response(@quote)
+      @quote = Quote.create!(quote_params)
+      json_response(@quote, :created)
     end
   # PATCH/PUT /quotes/1
   # PATCH/PUT /quotes/1.json
   def update
       @quote = Quote.find(params[:id])
-      @quote.update(quote_params)
+      @quote.update!(quote_params)
+      json_response(@quote)
     end
   # DELETE /quotes/1
   # DELETE /quotes/1.json
@@ -53,8 +54,8 @@ class QuotesController < ApplicationController
     end
 
   private
-    def json_response(object)
-      render json: object, status: :ok
+    def json_response(object, status = :ok)
+      render json: object, status: status
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
