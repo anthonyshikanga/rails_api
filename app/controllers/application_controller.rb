@@ -1,2 +1,3 @@
-class ApplicationController < ActiveController::API
-  End
+class ApplicationController < ActionController::API
+    include Response
+  end
