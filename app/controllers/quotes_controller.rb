@@ -47,11 +47,6 @@ class QuotesController < ApplicationController
       }
     end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_quote
-      @quote = Quote.find(params[:id])
-    end
 
   private
     def json_response(object, status = :ok)
@@ -60,6 +55,6 @@ class QuotesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def quote_params
-      params.require(:quote).permit(:author, :content)
+      params.permit(:author, :content)
     end
 end
